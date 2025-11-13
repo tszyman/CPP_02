@@ -1,0 +1,10 @@
+/CPP_01.code-workspace
+CPP_01_subject.pdf
+ex00/megaphone
+
+-- VSCode files --
+.vscode/*
+
+-- output files --
+*.o
+ex04/test.txt
