@@ -1,12 +1,10 @@
-NAME    = brainz
+NAME    = fixed_01
 
 CC      = c++
 CFLAGS  = -Wall -Wextra -Werror -std=c++98
 
 SRCS    = main.cpp\
-			Zombie.cpp\
-			newZombie.cpp\
-			randomChump.cpp
+			Fixed.cpp\
 			
 OBJS    = $(SRCS:.cpp=.o)
 
