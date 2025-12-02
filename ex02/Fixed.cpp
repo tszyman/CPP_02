@@ -4,6 +4,7 @@
 
 const int Fixed::_fractionalBits = 8;
 
+/* Orthodox Canonical Form */
 Fixed::Fixed() : _value(0)
 {
 	std::cout << "Default constructor called" << std::endl;
@@ -60,6 +61,141 @@ float Fixed::toFloat(void) const
 {
 	return(static_cast<float>(this->_value) / (1 << _fractionalBits));
 }
+
+/* Comparison operators */
+bool Fixed::operator>(Fixed const &other) const
+{
+	return (this->_value > other._value);
+}
+
+bool Fixed::operator<(Fixed const &other) const
+{
+	return (this->_value < other._value);
+}
+
+bool Fixed::operator>=(Fixed const &other) const
+{
+	return (this->_value >= other._value);
+}
+
+bool Fixed::operator<=(Fixed const &other) const
+{
+	return (this->_value <= other._value);
+}
+
+bool Fixed::operator==(Fixed const &other) const
+{
+	return (this->_value == other._value);
+}
+
+bool Fixed::operator!=(Fixed const &other) const
+{
+	return (this->_value != other._value);
+}
+
+/* Arithmetic operators */
+Fixed Fixed::operator+(Fixed const &other) const
+{
+	Fixed	result;
+
+	result.setRawBits(this->_value + other._value);
+	return(result);
+}
+
+Fixed Fixed::operator-(Fixed const &other) const
+{
+	Fixed	result;
+
+	result.setRawBits(this->_value - other._value);
+	return(result);
+}
+
+Fixed Fixed::operator*(Fixed const &other) const
+{
+	Fixed	result;
+	long	mlt;
+
+	mlt = static_cast<long>(this->_value)
+		* static_cast<long>(other._value);
+	mlt = mlt >> _fractionalBits;
+	result.setRawBits(static_cast<int>(mlt));
+	return(result);
+}
+
+Fixed Fixed::operator/(Fixed const &other) const
+{
+	Fixed	result;
+	long	div;
+
+	div = (static_cast<long>(this->_value) << _fractionalBits)
+		/ static_cast<long>(other._value);
+	result.setRawBits(static_cast<int>(div));
+	return(result);
+}
+
+/* Increment/decrement */
+/* pre-increment ++x */
+Fixed &Fixed::operator++()
+{
+	this->_value += 1;
+	return(*this);
+}
+
+/* post-increment x++ (must store original value in tmp) */
+Fixed Fixed::operator++(int)
+{
+	Fixed	tmp(*this);
+
+	this->_value += 1;
+	return(tmp);
+}
+
+/* pre-increment --x */
+Fixed &Fixed::operator--()
+{
+	this->_value -= 1;
+	return(*this);
+}
+
+/* post-increment x-- */
+Fixed Fixed::operator--(int)
+{
+	Fixed	tmp(*this);
+
+	this->_value -= 1;
+	return(tmp);
+}
+
+/* min/max */
+Fixed 		&Fixed::min(Fixed &a, Fixed &b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+Fixed const	&Fixed::min(Fixed const &a, Fixed const &b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
+Fixed		&Fixed::max(Fixed &a, Fixed &b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+Fixed const	&Fixed::max(Fixed const &a, Fixed const &b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
+/* Operator << */
 
 std::ostream &operator<<(std::ostream &os, Fixed const &fixed)
 {
