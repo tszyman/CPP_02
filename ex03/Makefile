@@ -4,9 +4,9 @@ CC      = c++
 CFLAGS  = -Wall -Wextra -Werror -std=c++98
 
 SRCS    = main.cpp\
-			Zombie.cpp\
-			newZombie.cpp\
-			randomChump.cpp
+			Fixed.cpp\
+			Point.cpp\
+			bsp.cpp
 			
 OBJS    = $(SRCS:.cpp=.o)
 
